@@ -12,6 +12,7 @@ import { Report } from './reports/report.entity';
 		TypeOrmModule.forRoot({
 			type: 'sqlite',
 			database: 'db.sqlite',
+			// for auto migration and drop in development. Disable for prod
 			synchronize: true,
 			entities: [User, Report],
 		}),
