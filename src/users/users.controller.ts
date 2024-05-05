@@ -14,15 +14,19 @@ import { UpdateDTO } from './dto/update.dto';
 // import { SerializeInterceptor } from 'src/interceptors/serialize.interceptor';
 import { UserDto } from './dto/user.dto';
 import { Serialize } from 'src/interceptors/serialize.interceptor';
+import { AuthService } from './auth.service';
 
 @Controller('auth')
 @Serialize(UserDto)
 export class UsersController {
-	constructor(private userService: UsersService) {}
+	constructor(
+		private userService: UsersService,
+		private authService: AuthService,
+	) {}
 
 	@Post('signup')
 	createUser(@Body() body: SignupDTO) {
-		return this.userService.create(body.email, body.password);
+		return this.authService.signup(body.email, body.password);
 	}
 
 	// Longer practice
@@ -33,7 +37,7 @@ export class UsersController {
 	@Get('/:id')
 	findUser(@Param('id') id: string) {
 		console.log('Inside handler');
-		return this.userService.findOne(+id);
+		return this.userService.findById(+id);
 	}
 
 	@Get()

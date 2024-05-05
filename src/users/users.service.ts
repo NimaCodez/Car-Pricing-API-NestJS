@@ -13,7 +13,7 @@ export class UsersService {
 		return this.repo.save(user);
 	}
 
-	findOne(id: number) {
+	findById(id: number) {
 		return this.repo.findOne({ where: { id: id } }); 
 	}
 
@@ -35,7 +35,7 @@ export class UsersService {
 		// insert & update => Don't run hooks.
 		// save => run hooks. | Trade-off between hooks and performance (double DB call)
 
-		const user = await this.findOne(id);
+		const user = await this.findById(id);
 		if (!user) throw new BadRequestException('User with the given ID was not found!');
 
 		Object.assign(user, attrs);
@@ -45,7 +45,7 @@ export class UsersService {
 
 	// unlike delete, *remove* will call hooks. | trade-off again.
 	async remove(id: number) {
-		const user = await this.findOne(id);
+		const user = await this.findById(id);
 		if (!user) return new BadRequestException('User with the given ID was not found!');
 
 		return this.repo.remove(user);
