@@ -1,6 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { UsersService } from './users.service';
-import {} from 'node:crypto';
 import { compare, genSalt, hash } from 'bcrypt';
 
 @Injectable()
